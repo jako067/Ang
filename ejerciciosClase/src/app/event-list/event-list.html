@@ -1,0 +1,13 @@
+<input
+  type="text"
+  placeholder="Buscar por título"
+  [(ngModel)]="searchText"
+/>
+
+@for (event of events | eventFilter: searchText; track event.title) {
+
+    <p>
+        {{event.title}}
+    </p>
+
+}

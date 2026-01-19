@@ -1,12 +1,21 @@
 import { Component } from '@angular/core';
-import { NgClass } from "../../../node_modules/@angular/common/types/_common_module-chunk";
-
 @Component({
   selector: 'app-hover-button',
-  imports: [NgClass],
+  imports: [],
   templateUrl: './hover-button.html',
   styleUrl: './hover-button.css',
 })
 export class HoverButton {
+
+  count=0;
+
+  onMouseEnter() {
+    console.log('Ratón sobre el botón');
+  }
+  Onclick(){
+
+    this.count++;
+    console.log(this.count);
+  }
 
 }
