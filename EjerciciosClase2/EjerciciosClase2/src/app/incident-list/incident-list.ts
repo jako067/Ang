@@ -4,7 +4,7 @@ import { NoticeItem } from "../notice-item/notice-item";
 
 @Component({
   selector: 'app-incident-list',
-  imports: [IncidentItem, NoticeItem],
+  imports: [IncidentItem],
   templateUrl: './incident-list.html',
   styleUrl: './incident-list.css',
 })

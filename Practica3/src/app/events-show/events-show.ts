@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './events-show.css',
 })
 export class EventsShow {
+  search="";
 
   events: IEvent[]=[
     {
@@ -32,13 +33,12 @@ export class EventsShow {
   ];
 
   orderDate(){
+      
 
-    
   }
     orderPrice(){
     
 
   }
-  search: '',
 
 }
