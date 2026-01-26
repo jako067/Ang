@@ -10,4 +10,8 @@ import { NoticeItem } from "../notice-item/notice-item";
 })
 export class IncidentList {
 
+  incidentArray = [ 
+
+  ]   ;
+
 }

@@ -6,7 +6,7 @@ import { IncidentList } from "./incident-list/incident-list";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NoticeItem, NoticeList, IncidentList],
+  imports: [NoticeList, IncidentList],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -2,7 +2,6 @@ import { Component, Pipe } from '@angular/core';
 import {IEvent} from '../interfaces/i-event';
 import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common';
 import { TitleCasePipe } from '@angular/common';
-import { NgModel } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -34,7 +33,6 @@ export class EventsShow {
 
   orderDate(){
       
-
   }
     orderPrice(){
     
