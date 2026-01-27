@@ -1,42 +1,73 @@
 import { Component, Pipe } from '@angular/core';
-import {IEvent} from '../interfaces/i-event';
+import { IEvent } from '../interfaces/i-event';
 import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common';
 import { TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-events-show',
-  imports: [TitleCasePipe, DatePipe,CurrencyPipe, FormsModule],
+  imports: [TitleCasePipe, DatePipe, CurrencyPipe, FormsModule],
   templateUrl: './events-show.html',
   styleUrl: './events-show.css',
 })
 export class EventsShow {
-  search="";
+  search = '';
 
-  events: IEvent[]=[
+  newEvent: IEvent = {
+    title: '',
+    description: '',
+    image: '',
+    price: 0,
+    date: '',
+  };
+
+  events: IEvent[] = [
     {
-    title: 'cumple',
-    image: 'minecraft.jpg',
-    date: '2025-11-29',
-    description: 'celebración del día en el que se llega al mundo',
-    price: 10,
+      title: 'cumple',
+      image: 'minecraft.jpg',
+      date: '2025-11-29',
+      description: 'celebración del día en el que se llega al mundo',
+      price: 10,
     },
-    {    
-    title: 'navidad',
-    image: 'herobrine.jpg',
-    date: '2025-11-30',
-    description: 'celebración del día en el que jesus nació',
-    price: 100,
+    {
+      title: 'navidad',
+      image: 'herobrine.jpg',
+      date: '2025-11-30',
+      description: 'celebración del día en el que jesus nació',
+      price: 100,
     },
-
   ];
 
-  orderDate(){
-      
+  orderDate() {
+    this.events.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
   }
-    orderPrice(){
-    
-
+  orderPrice() {
+    this.events.sort((a, b) => a.price - b.price);
   }
 
+  addEvent() {
+    // Añadimos una copia del nuevo evento al array
+    this.events.push({ ...this.newEvent });
+
+    // Reiniciamos el formulario
+    this.newEvent = {
+      title: '',
+      description: '',
+      image: '',
+      price: 0,
+      date: '',
+    };
+  }
+  changeImage(fileInput: HTMLInputElement) {
+    if (!fileInput.files || fileInput.files.length === 0) {
+      return;
+    }
+    const reader: FileReader = new FileReader();
+    reader.readAsDataURL(fileInput.files[0]);
+    reader.addEventListener('loadend', (e) => {
+      this.newEvent.image = reader.result as string;
+    });
+  }
 }
