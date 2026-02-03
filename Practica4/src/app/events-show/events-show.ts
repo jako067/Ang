@@ -1,23 +1,25 @@
-import { Component, EventEmitter, Output, Pipe } from '@angular/core';
+import { Component, Pipe } from '@angular/core';
 import { IEvent } from '../interfaces/i-event';
-import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common';
-import { TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { EventoItem } from '../evento-item/evento-item';
+import { EventoAdd } from '../evento-add/evento-add';
+import { ProductoService } from '../services/producto.service';
 
 @Component({
   selector: 'app-events-show',
-  imports: [TitleCasePipe, DatePipe, CurrencyPipe, FormsModule],
+  imports: [FormsModule, EventoItem, EventoAdd],
   templateUrl: './events-show.html',
   styleUrl: './events-show.css',
 })
 export class EventsShow {
-  @Output() delete = new EventEmitter<void>();
-
-  deleteEvento(){
-    this.delete.emit();
-  }
-
   search = '';
+
+  deleteEvento(eventToDelete: IEvent) {
+    this.events = this.events.filter((e) => e !== eventToDelete);
+  }
+  addEvent(event: IEvent) {
+    this.events = [...this.events, event];
+  }
 
   newEvent: IEvent = {
     title: '',
@@ -27,22 +29,14 @@ export class EventsShow {
     date: '',
   };
 
-  events: IEvent[] = [
-    {
-      title: 'cumple',
-      image: 'minecraft.jpg',
-      date: '2025-11-29',
-      description: 'celebración del día en el que se llega al mundo',
-      price: 10,
-    },
-    {
-      title: 'navidad',
-      image: 'herobrine.jpg',
-      date: '2025-11-30',
-      description: 'celebración del día en el que jesus nació',
-      price: 100,
-    },
-  ];
+  events: IEvent[] = [];
+
+ /* Tendría que haber llamado al Servicio, eventos*/
+
+  constructor(private eventsService: ProductoService) {}
+  ngOnInit() {
+    this.events = this.eventsService.getProducts();
+  }
 
   orderDate() {
     this.events.sort((a, b) => {
@@ -52,28 +46,4 @@ export class EventsShow {
   orderPrice() {
     this.events.sort((a, b) => a.price - b.price);
   }
-
-  addEvent() {
-    this.events.push({ ...this.newEvent });
-
-    this.newEvent = {
-      title: '',
-      description: '',
-      image: '',
-      price: 0,
-      date: '',
-    };
-  }
-  changeImage(fileInput: HTMLInputElement) {
-    if (!fileInput.files || fileInput.files.length === 0) {
-      return;
-    }
-    const reader: FileReader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.addEventListener('loadend', (e) => {
-      this.newEvent.image = reader.result as string;
-    });
-  }
-
-
 }
