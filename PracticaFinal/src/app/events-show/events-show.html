@@ -1,7 +1,6 @@
 
 <div class="row">
-  @for (event of (evento$ | async); track event.id) {
-
+  @for (event of events; track event.title) {
     <div class="col-6 mt-4">
       <app-evento-item
         class="card"
